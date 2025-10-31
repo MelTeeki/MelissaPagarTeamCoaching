@@ -1,0 +1,46 @@
+
+backend:
+  name: git-gateway
+  branch: main
+
+# If staying on GitHub Pages with no Netlify, uncomment below and set up a GitHub OAuth app.
+# backend:
+#   name: github
+#   repo: MelTeeki/MelissaPagarTeamCoaching
+#   branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: "site"
+    label: "Site Content"
+    files:
+      - file: "content/site_content.json"
+        label: "Website Text & Settings"
+        name: "site_content"
+        fields:
+          - {label: "Brand Name", name: "brand_name", widget: "string"}
+          - label: "Brand Colors"
+            name: "brand_colors"
+            widget: "object"
+            fields:
+              - {label: "Primary", name: "primary", widget: "string", default: "#7a2131"}
+              - {label: "Accent", name: "accent", widget: "string", default: "#c7a34b"}
+              - {label: "Light", name: "light", widget: "string", default: "#faf8f7"}
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Subtitle", name: "hero_subtitle", widget: "text"}
+          - {label: "Unique Value Proposition", name: "uvp", widget: "text"}
+          - label: "Engagement Flow"
+            name: "engagement_flow"
+            widget: "list"
+            field: {label: "Step", name: "step", widget: "string"}
+          - label: "Tools"
+            name: "tools"
+            widget: "list"
+            field: {label: "Item", name: "item", widget: "string"}
+          - {label: "Assessments Intro", name: "assessments_intro", widget: "text"}
+          - {label: "ICF Intro", name: "icf_intro", widget: "text"}
+          - {label: "Teams vs Groups Intro", name: "compare_intro", widget: "text"}

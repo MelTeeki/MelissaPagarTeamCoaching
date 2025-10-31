@@ -1,0 +1,29 @@
+{
+  "brand_name": "Melissa Pagar Team Coaching",
+  "hero_title": "Build a high\u2011trust, high\u2011performing team\u2014on purpose.",
+  "hero_subtitle": "Practical, ethical team coaching for leaders who want better decisions, faster execution, and a culture where people do their best work together.",
+  "uvp": "We coach the system, not just the individuals. Your team learns to diagnose itself, make better commitments, and sustain improvements long after the engagement ends.",
+  "engagement_flow": [
+    "Discovery & Contracting",
+    "Diagnostics & Goal Setting",
+    "Live Team Coaching",
+    "Targeted Capability Building",
+    "Measure & Sustain"
+  ],
+  "tools": [
+    "Team Building",
+    "Team Training",
+    "Team Consulting",
+    "Team Mentoring",
+    "Team Facilitation",
+    "Team Coaching"
+  ],
+  "assessments_intro": "Right\u2011sized data that informs action\u2014not binders of reports that sit on shelves.",
+  "icf_intro": "Aligned with ICF Core Competencies, interpreted for a team\u2011as\u2011client context.",
+  "compare_intro": "Team coaching treats the team as the client: success means better collective thinking, relating, and execution.",
+  "brand_colors": {
+    "primary": "#7a2131",
+    "accent": "#c7a34b",
+    "light": "#faf8f7"
+  }
+}
