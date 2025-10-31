@@ -5,145 +5,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Melissa Pagar Team Coaching</title>
     <meta name="description" content="Practical, ethical team coaching for high-trust, high-performance teams—grounded in ICF competencies." />
-    <meta property="og:title" content="Melissa Pagar Team Coaching" />
-    <meta property="og:description" content="Practical, ethical team coaching for high-trust, high-performance teams—grounded in ICF competencies." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://dummyimage.com/1200x630/7a2131/c7a34b&text=Melissa+Pagar+Team+Coaching" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Melissa Pagar Team Coaching" />
-    <meta name="twitter:description" content="Practical, ethical team coaching for high-trust, high-performance teams—grounded in ICF competencies." />
-    <meta name="twitter:image" content="https://dummyimage.com/1200x630/7a2131/c7a34b&text=Melissa+Pagar+Team+Coaching" />
-
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
-
   <body class="min-h-screen bg-gradient-to-br from-white via-[#faf8f7] to-white">
     <div id="root"></div>
-
     <script type="text/babel">
-      const { useState, useMemo } = React;
-
-      const BRAND = {
-        name: "Melissa Pagar Team Coaching",
-        colors: {
-          primary: "#7a2131",
-          accent: "#c7a34b",
-          light: "#faf8f7"
-        },
-        fonts: {
-          head: "'Playfair Display', serif",
-          body: "Inter, sans-serif"
-        }
-      };
-
-      const NAV = [
-        { key: "home", label: "Home" },
-        { key: "looks", label: "What Coaching Looks Like" },
-        { key: "tools", label: "Tools" },
-        { key: "assess", label: "Assessments" },
-        { key: "icf", label: "ICF Competencies" },
-        { key: "compare", label: "Teams vs Groups" },
+      const { useState, useMemo, useEffect, useRef } = React;
+      function useSiteContent() {
+        const [data, setData] = useState(null);
+        const loaded = useRef(false);
+        useEffect(() => {
+          if (loaded.current) return;
+          loaded.current = true;
+          fetch("./content/site_content.json", { cache: "no-store" })
+            .then(r => r.json())
+            .then(setData)
+            .catch(() => setData(null));
+        }, []);
+        return data;
+      }
+      const NAV=[
+        {key:"home",label:"Home"},
+        {key:"looks",label:"What Coaching Looks Like"},
+        {key:"tools",label:"Tools"},
+        {key:"assess",label:"Assessments"},
+        {key:"icf",label:"ICF Competencies"},
+        {key:"compare",label:"Teams vs Groups"},
       ];
-
-      const Section = ({ title, children }) => (
+      const Section=({title,children,brand})=>(
         <section className="rounded-2xl border bg-white/70 p-6 shadow-sm backdrop-blur mb-6">
-          <h2 className="text-2xl font-semibold mb-3" style={{ color: BRAND.colors.primary, fontFamily: BRAND.fonts.head }}>{title}</h2>
-          <div style={{ fontFamily: BRAND.fonts.body }}>{children}</div>
+          <h2 className="text-2xl font-semibold mb-3" style={{ color: brand.colors.primary, fontFamily: brand.fonts.head }}>{title}</h2>
+          <div style={{ fontFamily: brand.fonts.body }}>{children}</div>
         </section>
       );
-
-      const Home = () => (
+      const Home=({c,brand})=>(
         <div>
-          <Section title="Team Coaching that Turns Potential into Performance">
-            <p>Melissa partners with intact teams to improve how they think, relate, and execute—so the business moves faster and people thrive. Through a blend of team coaching, facilitation, and targeted capability-building, teams learn to diagnose themselves, make better commitments, and sustain performance improvements.</p>
+          <Section title="Team Coaching that Turns Potential into Performance" brand={brand}>
+            <p>{c.uvp}</p>
           </Section>
-          <Section title="Engagement Flow">
+          <Section title="Engagement Flow" brand={brand}>
             <ol className="list-decimal pl-6 space-y-2">
-              <li>Discovery & Contracting</li>
-              <li>Diagnostics & Goal Setting</li>
-              <li>Live Team Coaching</li>
-              <li>Targeted Capability Building</li>
-              <li>Measure & Sustain</li>
+              {c.engagement_flow.map((s,i)=><li key={i}>{s}</li>)}
             </ol>
           </Section>
         </div>
       );
-
-      const Looks = () => (
-        <Section title="What Team Coaching Looks Like">
+      const Looks=({c,brand})=>(
+        <Section title="What Team Coaching Looks Like" brand={brand}>
           <p>A typical session blends observation, inquiry, and timely interventions while the team works on its real priorities.</p>
         </Section>
       );
-
-      const Tools = () => (
-        <Section title="Tools">
-          <ul className="list-disc pl-6">
-            <li>Team Building</li>
-            <li>Team Training</li>
-            <li>Team Consulting</li>
-            <li>Team Mentoring</li>
-            <li>Team Facilitation</li>
-            <li>Team Coaching</li>
-          </ul>
+      const Tools=({c,brand})=>(
+        <Section title="Tools" brand={brand}>
+          <ul className="list-disc pl-6">{c.tools.map((t,i)=><li key={i}>{t}</li>)}</ul>
         </Section>
       );
-
-      const Assess = () => (
-        <Section title="Assessments">
-          <p>We use right-sized data that informs action—not binders of reports that sit on shelves.</p>
+      const Assess=({c,brand})=>(
+        <Section title="Assessments" brand={brand}>
+          <p>{c.assessments_intro}</p>
         </Section>
       );
-
-      const ICF = () => (
-        <Section title="ICF Team Coaching Competencies">
-          <p>Aligned with ICF Core Competencies, interpreted for a team-as-client context.</p>
+      const ICF=({c,brand})=>(
+        <Section title="ICF Team Coaching Competencies" brand={brand}>
+          <p>{c.icf_intro}</p>
         </Section>
       );
-
-      const Compare = () => (
-        <Section title="Teams vs Groups">
-          <p>Team coaching treats the team as the client: success means better collective thinking, relating, and execution.</p>
+      const Compare=({c,brand})=>(
+        <Section title="Teams vs Groups" brand={brand}>
+          <p>{c.compare_intro}</p>
         </Section>
       );
-
-      const App = () => {
-        const [page, setPage] = useState("home");
-        const Page = useMemo(() => {
-          switch (page) {
-            case "looks": return <Looks />;
-            case "tools": return <Tools />;
-            case "assess": return <Assess />;
-            case "icf": return <ICF />;
-            case "compare": return <Compare />;
-            default: return <Home />;
+      const App=()=>{
+        const c=useSiteContent();
+        if(!c) return <main className="p-6">Loading…</main>;
+        const brand={
+          name:c.brand_name || "Melissa Pagar Team Coaching",
+          colors:c.brand_colors || {primary:"#7a2131",accent:"#c7a34b",light:"#faf8f7"},
+          fonts:{head:"'Playfair Display', serif", body:"Inter, sans-serif"}
+        };
+        const [page,setPage]=useState("home");
+        const Page=useMemo(()=>{
+          switch(page){
+            case "looks": return <Looks c={c} brand={brand}/>;
+            case "tools": return <Tools c={c} brand={brand}/>;
+            case "assess": return <Assess c={c} brand={brand}/>;
+            case "icf": return <ICF c={c} brand={brand}/>;
+            case "compare": return <Compare c={c} brand={brand}/>;
+            default: return <Home c={c} brand={brand}/>;
           }
-        }, [page]);
-
+        },[page,c]);
         return (
           <main className="text-zinc-900">
-            <header className="sticky top-0 z-40 border-b bg-white/85 backdrop-blur" style={{ borderColor: BRAND.colors.accent }}>
+            <header className="sticky top-0 z-40 border-b bg-white/85 backdrop-blur" style={{ borderColor: brand.colors.accent }}>
               <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-                <h1 className="text-lg font-bold" style={{ color: BRAND.colors.primary, fontFamily: BRAND.fonts.head }}>{BRAND.name}</h1>
+                <h1 className="text-lg font-bold" style={{ color: brand.colors.primary, fontFamily: brand.fonts.head }}>{brand.name}</h1>
                 <nav className="flex gap-1">
-                  {NAV.map(n => (
-                    <button key={n.key} onClick={() => setPage(n.key)} className="rounded-lg px-3 py-1 text-sm hover:bg-zinc-100" style={page === n.key ? { backgroundColor: BRAND.colors.primary, color: 'white' } : {}}>{n.label}</button>
+                  {NAV.map(n=>(
+                    <button key={n.key} onClick={()=>setPage(n.key)} className="rounded-lg px-3 py-1 text-sm hover:bg-zinc-100" style={page===n.key?{backgroundColor:brand.colors.primary,color:'white'}:{}}>{n.label}</button>
                   ))}
                 </nav>
               </div>
             </header>
-            <div className="mx-auto max-w-4xl p-6">{Page}</div>
+            <div className="mx-auto max-w-4xl p-6">
+              <section className="mb-6 rounded-xl bg-white/60 p-6 border">
+                <h2 className="text-3xl font-bold" style={{ color: brand.colors.primary, fontFamily: brand.fonts.head }}>{c.hero_title}</h2>
+                <p className="mt-2 text-zinc-700" style={{ fontFamily: brand.fonts.body }}>{c.hero_subtitle}</p>
+              </section>
+              {Page}
+            </div>
             <footer className="border-t text-center py-4 text-sm text-zinc-600">
-              © {new Date().getFullYear()} {BRAND.name}. All rights reserved.
+              © {new Date().getFullYear()} {brand.name}. All rights reserved. · <a href="./admin/" class="underline">Admin</a>
             </footer>
           </main>
         );
       };
-
-      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+      ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
     </script>
   </body>
 </html>
